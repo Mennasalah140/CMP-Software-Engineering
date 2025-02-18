@@ -11,7 +11,7 @@ exports.deleteEmployee = async (req, res, next) => {
   try {
     const { id } = req.params;
     const index = employee.findIndex(emp => emp.id === id);
-    if (employee.some(emp => emp.id === id)) {
+    if (index !== -1) {
       employee.splice(index, 1);
       res.status(200).json({ message: 'Employee deleted successfully' });
     } else {
