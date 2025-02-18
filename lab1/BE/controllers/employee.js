@@ -27,9 +27,14 @@ exports.deleteEmployee = async (req, res, next) => {
 exports.createEmployee = async (req, res, next) => {
   try {
     const { id, name } = req.body;
-    if (id && name && !employee.some(emp => emp.id === id)) {
-      employee.push({ id, name });
-      res.status(201).json({ message: 'Employee created successfully' });
+    if (id && name) {
+      if (!employee.find(emp => emp.id === id)) {
+        let newEmployee = { id, name };
+        employee.push(newEmployee);
+        res.status(201).json({ message: 'Employee created successfully' });
+      } else {
+        res.status(400).json({ message: 'Employee already exists' });
+      }
     } else {
       res.status(400).json({ message: 'Invalid employee data' });
     }
